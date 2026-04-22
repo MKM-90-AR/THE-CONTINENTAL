@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Continental | فندق القارة</title>
     
     <!-- Tailwind CSS -->
@@ -15,91 +15,112 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #020617; color: #f8fafc; }
-        .page-content { display: none; animation: fadeIn 0.5s ease-in-out; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #020617; color: #f8fafc; -webkit-tap-highlight-color: transparent; }
+        .page-content { display: none; animation: fadeIn 0.4s ease-in-out; }
         .page-content.active { display: block; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-yellow-500 selection:text-black">
+<body class="min-h-screen flex flex-col selection:bg-yellow-500 selection:text-black pb-20 md:pb-0">
 
-    <!-- شريط التنقل (Navbar) -->
+    <!-- شريط التنقل للكمبيوتر (Navbar Desktop) -->
     <nav class="bg-slate-900/95 backdrop-blur-md border-b-2 border-yellow-600 sticky top-0 z-50 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
+            <div class="flex justify-between h-16 md:h-20 items-center">
                 
                 <!-- الشعار والاسم -->
-                <div class="flex items-center gap-4 cursor-pointer group" onclick="navigateTo('home')">
-                    <!-- مسار الصورة المحلي الذي طلبته -->
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="navigateTo('home')">
+                    <!-- مسار الصورة النسبي (داخل نفس المجلد) -->
                     <img 
                         src="THE CONTINENTAL.png" 
                         alt="Logo" 
                         onerror="this.src='https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=150'"
-                        class="w-12 h-12 rounded-full border-2 border-yellow-500 object-cover"
+                        class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-yellow-500 object-cover"
                     />
-                    <span class="font-black text-2xl tracking-tighter text-yellow-500">
+                    <span class="font-black text-xl md:text-2xl tracking-tighter text-yellow-500">
                         THE CONTINENTAL
                     </span>
                 </div>
                 
-                <!-- أزرار الصفحات -->
-                <div class="flex space-x-2 space-x-reverse overflow-x-auto no-scrollbar">
-                    <button onclick="navigateTo('home')" id="btn-home" class="nav-btn bg-yellow-600 text-slate-950 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-[0_0_15px_rgba(202,138,4,0.3)]">
-                        <i data-lucide="home" class="w-5 h-5"></i> <span class="hidden sm:inline">الرئيسية</span>
+                <!-- أزرار الصفحات (مخفية على الهاتف، تظهر على الكمبيوتر) -->
+                <div class="hidden md:flex space-x-2 space-x-reverse">
+                    <button onclick="navigateTo('home')" class="nav-btn-desk nav-target-home bg-yellow-600 text-slate-950 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all shadow-[0_0_15px_rgba(202,138,4,0.3)]">
+                        <i data-lucide="home" class="w-5 h-5"></i> الرئيسية
                     </button>
-                    <button onclick="navigateTo('map')" id="btn-map" class="nav-btn text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
-                        <i data-lucide="map" class="w-5 h-5"></i> <span class="hidden sm:inline">الخريطة</span>
+                    <button onclick="navigateTo('map')" class="nav-btn-desk nav-target-map text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
+                        <i data-lucide="map" class="w-5 h-5"></i> الخريطة
                     </button>
-                    <button onclick="navigateTo('rules')" id="btn-rules" class="nav-btn text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
-                        <i data-lucide="book-open" class="w-5 h-5"></i> <span class="hidden sm:inline">الدستور</span>
+                    <button onclick="navigateTo('rules')" class="nav-btn-desk nav-target-rules text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
+                        <i data-lucide="book-open" class="w-5 h-5"></i> الدستور
                     </button>
-                    <button onclick="navigateTo('admins')" id="btn-admins" class="nav-btn text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
-                        <i data-lucide="users" class="w-5 h-5"></i> <span class="hidden sm:inline">الإدارة</span>
+                    <button onclick="navigateTo('admins')" class="nav-btn-desk nav-target-admins text-slate-400 hover:text-yellow-500 hover:bg-slate-800 flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all">
+                        <i data-lucide="users" class="w-5 h-5"></i> الإدارة
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <!-- شريط التنقل للهاتف (Bottom Navigation Mobile) -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-slate-900 border-t border-slate-800 z-50 flex justify-around items-center p-2 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] pb-safe">
+        <button onclick="navigateTo('home')" class="nav-btn-mob nav-target-home flex flex-col items-center p-2 text-yellow-500 transition-colors">
+            <i data-lucide="home" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </button>
+        <button onclick="navigateTo('map')" class="nav-btn-mob nav-target-map flex flex-col items-center p-2 text-slate-400 transition-colors">
+            <i data-lucide="map" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold">الخريطة</span>
+        </button>
+        <button onclick="navigateTo('rules')" class="nav-btn-mob nav-target-rules flex flex-col items-center p-2 text-slate-400 transition-colors">
+            <i data-lucide="book-open" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold">الدستور</span>
+        </button>
+        <button onclick="navigateTo('admins')" class="nav-btn-mob nav-target-admins flex flex-col items-center p-2 text-slate-400 transition-colors">
+            <i data-lucide="users" class="w-6 h-6 mb-1"></i>
+            <span class="text-[10px] font-bold">الإدارة</span>
+        </button>
+    </div>
+
+    <!-- منطقة عرض الصفحات -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 flex-grow w-full">
 
         <!-- ============================== 1. الصفحة الرئيسية ============================== -->
-        <div id="page-home" class="page-content active space-y-12">
-            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl h-[500px] flex items-center justify-center">
+        <div id="page-home" class="page-content active space-y-8 md:space-y-12">
+            <div class="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl h-[400px] md:h-[500px] flex items-center justify-center">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-slate-950/80 to-transparent z-10"></div>
                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=2070" alt="Background" class="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-luminosity" />
-                <div class="relative z-20 text-center space-y-6 px-6">
-                    <h1 class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-600 tracking-widest drop-shadow-lg">
+                <div class="relative z-20 text-center space-y-4 md:space-y-6 px-4">
+                    <h1 class="text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-yellow-600 tracking-widest drop-shadow-lg">
                         THE CONTINENTAL
                     </h1>
-                    <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
+                    <p class="text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto font-light leading-relaxed">
                         المقر الرسمي.. حيث تُصنع القوانين وتُنفذ العقوبات الصارمة.
                     </p>
-                    <div class="pt-8 flex flex-wrap justify-center gap-4">
-                        <button onclick="navigateTo('rules')" class="bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-lg transition-transform hover:-translate-y-1 shadow-lg shadow-yellow-600/20 flex items-center gap-2">
+                    <div class="pt-4 md:pt-8 flex flex-wrap justify-center gap-4">
+                        <button onclick="navigateTo('rules')" class="bg-yellow-600 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-lg transition-transform hover:-translate-y-1 shadow-lg shadow-yellow-600/20 flex items-center gap-2 w-full md:w-auto justify-center">
                             <i data-lucide="book-open" class="w-5 h-5"></i> قراءة الدستور
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl text-center">
-                    <i data-lucide="shield" class="w-12 h-12 mx-auto text-yellow-500 mb-4"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-900/50 border border-slate-800 p-6 md:p-8 rounded-2xl text-center">
+                    <i data-lucide="shield" class="w-10 h-10 md:w-12 md:h-12 mx-auto text-yellow-500 mb-4"></i>
                     <h3 class="text-white font-bold text-lg mb-2">نظام صارم</h3>
                     <p class="text-slate-500 text-sm">خطوط حمراء ودستور لا يقبل النقاش تم وضعه من قبل ملك الدستور.</p>
                 </div>
-                <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl text-center">
-                    <i data-lucide="gavel" class="w-12 h-12 mx-auto text-red-500 mb-4"></i>
+                <div class="bg-slate-900/50 border border-slate-800 p-6 md:p-8 rounded-2xl text-center">
+                    <i data-lucide="gavel" class="w-10 h-10 md:w-12 md:h-12 mx-auto text-red-500 mb-4"></i>
                     <h3 class="text-white font-bold text-lg mb-2">قضاء وعدالة</h3>
                     <p class="text-slate-500 text-sm">محكمة مستقلة وعقوبات حازمة تنفذ بيد القاضي سهل والمحامي.</p>
                 </div>
-                <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl text-center">
-                    <i data-lucide="monitor-play" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
+                <div class="bg-slate-900/50 border border-slate-800 p-6 md:p-8 rounded-2xl text-center">
+                    <i data-lucide="monitor-play" class="w-10 h-10 md:w-12 md:h-12 mx-auto text-blue-500 mb-4"></i>
                     <h3 class="text-white font-bold text-lg mb-2">أقسام مخصصة</h3>
                     <p class="text-slate-500 text-sm">من الأنمي وديزني إلى مختبرات BTEC بإدارة النشاطات عمار.</p>
                 </div>
@@ -107,88 +128,88 @@
         </div>
 
         <!-- ============================== 2. صفحة الخريطة ============================== -->
-        <div id="page-map" class="page-content space-y-10">
-            <div class="border-b border-slate-800 pb-6">
-                <h2 class="text-4xl font-black text-yellow-500 flex items-center gap-3"><i data-lucide="map"></i> خريطة السيرفر الرسمية</h2>
-                <p class="text-slate-400 mt-2">الهيكل التنظيمي المحدث والمطابق للواقع، مع توضيح المسؤوليات.</p>
+        <div id="page-map" class="page-content space-y-8 md:space-y-10">
+            <div class="border-b border-slate-800 pb-4 md:pb-6">
+                <h2 class="text-3xl md:text-4xl font-black text-yellow-500 flex items-center gap-3"><i data-lucide="map" class="w-8 h-8 md:w-10 md:h-10"></i> خريطة السيرفر الرسمية</h2>
+                <p class="text-slate-400 mt-2 text-sm md:text-base">الهيكل التنظيمي المحدث والمطابق للواقع، مع توضيح المسؤوليات.</p>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
                 <!-- شجرة الديسكورد -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl font-mono text-sm">
-                    <h3 class="text-xl font-bold mb-6 text-white border-b border-slate-700 pb-3">Discord Channels Tree</h3>
+                <div class="bg-slate-900 p-4 md:p-8 rounded-2xl border border-slate-800 shadow-xl font-mono text-xs md:text-sm overflow-x-auto">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 md:mb-6 text-white border-b border-slate-700 pb-3 whitespace-nowrap">Discord Channels Tree</h3>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-6 min-w-[280px]">
                         <!-- 1 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 🏛️ الإدارة-العليا</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-4 h-4"></i> 📜┃الدستور-</span> <span class="text-[10px] bg-slate-800 px-2 rounded">مسؤول: بلال</span></div>
-                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-4 h-4"></i> 📢┃رؤية</span> <span class="text-[10px] bg-slate-800 px-2 rounded">مسؤول: عبدالرحمن</span></div>
-                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-4 h-4"></i> 🗓️┃إدارة-النشاطات</span> <span class="text-[10px] bg-slate-800 px-2 rounded">مسؤول: عمار</span></div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-3 h-3 md:w-4 md:h-4"></i> 📜┃الدستور-</span> <span class="text-[9px] md:text-[10px] bg-slate-800 px-2 rounded mt-0.5">مسؤول: بلال</span></div>
+                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-3 h-3 md:w-4 md:h-4"></i> 📢┃رؤية</span> <span class="text-[9px] md:text-[10px] bg-slate-800 px-2 rounded mt-0.5">مسؤول: عبدالرحمن</span></div>
+                                <div class="flex justify-between hover:text-white"><span class="flex gap-2"><i data-lucide="hash" class="w-3 h-3 md:w-4 md:h-4"></i> 🗓️┃إدارة-النشاطات</span> <span class="text-[9px] md:text-[10px] bg-slate-800 px-2 rounded mt-0.5">مسؤول: عمار</span></div>
                             </div>
                         </div>
 
                         <!-- 2 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 💬 الاستراحة والدردشة (Social Hub)</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="hover:text-white flex gap-2"><i data-lucide="message-square" class="w-4 h-4"></i> المجلس-العام</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-4 h-4"></i> المجلس (صوتية)</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="hover:text-white flex gap-2"><i data-lucide="message-square" class="w-3 h-3 md:w-4 md:h-4"></i> المجلس-العام</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-3 h-3 md:w-4 md:h-4"></i> المجلس (صوتية)</div>
                             </div>
                         </div>
 
                         <!-- 3 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 🎯 ساحة-الفعاليات</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-4 h-4"></i> 🎮 ساحة-اللعب</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-4 h-4"></i> 🍿 سينما-الأصدقاء</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-3 h-3 md:w-4 md:h-4"></i> 🎮 ساحة-اللعب</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-3 h-3 md:w-4 md:h-4"></i> 🍿 سينما-الأصدقاء</div>
                             </div>
                         </div>
 
                         <!-- 4 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 👥 جلسة-خاصة</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-4 h-4"></i> الغرفة-الثنائية</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-4 h-4"></i> الغرفة-الثلاثية</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-4 h-4"></i> الغرفة-الرباعية</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-3 h-3 md:w-4 md:h-4"></i> الغرفة-الثنائية</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-3 h-3 md:w-4 md:h-4"></i> الغرفة-الثلاثية</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="lock" class="w-3 h-3 md:w-4 md:h-4"></i> الغرفة-الرباعية</div>
                             </div>
                         </div>
 
                         <!-- 5 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ ⛩️ الأنمي (VIP)</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-purple-400">
-                                <div class="flex gap-2"><i data-lucide="lock" class="w-4 h-4"></i> 💬 نقاشات-ومانجا</div>
-                                <div class="flex gap-2"><i data-lucide="lock" class="w-4 h-4"></i> 🍿 جلسة-المشاهدة</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-purple-400">
+                                <div class="flex gap-2"><i data-lucide="lock" class="w-3 h-3 md:w-4 md:h-4"></i> 💬 نقاشات-ومانجا</div>
+                                <div class="flex gap-2"><i data-lucide="lock" class="w-3 h-3 md:w-4 md:h-4"></i> 🍿 جلسة-المشاهدة</div>
                             </div>
                         </div>
 
                         <!-- 6 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 🍿 سهرات-ديزني</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="hover:text-white flex gap-2"><i data-lucide="hash" class="w-4 h-4"></i> 📝 قائمة-السهرة</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-4 h-4"></i> 🎬 سينما-VIP</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="hover:text-white flex gap-2"><i data-lucide="hash" class="w-3 h-3 md:w-4 md:h-4"></i> 📝 قائمة-السهرة</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-3 h-3 md:w-4 md:h-4"></i> 🎬 سينما-VIP</div>
                             </div>
                         </div>
 
                         <!-- 7 -->
                         <div>
                             <div class="text-slate-300 font-bold mb-2">▼ 💻 قرايه (BTEC)</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
-                                <div class="hover:text-white flex gap-2"><i data-lucide="hash" class="w-4 h-4"></i> 📝 مصادر-ومشاريع</div>
-                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-4 h-4"></i> ⚙️ مختبر-البرمجة</div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-slate-700 mr-2 text-slate-400">
+                                <div class="hover:text-white flex gap-2"><i data-lucide="hash" class="w-3 h-3 md:w-4 md:h-4"></i> 📝 مصادر-ومشاريع</div>
+                                <div class="hover:text-white flex gap-2"><i data-lucide="volume-2" class="w-3 h-3 md:w-4 md:h-4"></i> ⚙️ مختبر-البرمجة</div>
                             </div>
                         </div>
 
                         <!-- 8 -->
                         <div class="bg-red-950/20 p-2 rounded border border-red-900/30">
                             <div class="text-red-500 font-bold mb-2">▼ ⚖️ منطقة العقوبات</div>
-                            <div class="pr-6 space-y-2 border-r-2 border-red-900/50 mr-2">
-                                <div class="flex justify-between text-red-400"><span class="flex gap-2"><i data-lucide="link" class="w-4 h-4"></i> ⛓️ جويدة</span> <span class="text-[10px] bg-red-900/50 px-2 rounded">مسؤول: سهل</span></div>
+                            <div class="pr-4 md:pr-6 space-y-2 border-r-2 border-red-900/50 mr-2">
+                                <div class="flex justify-between text-red-400"><span class="flex gap-2"><i data-lucide="link" class="w-3 h-3 md:w-4 md:h-4"></i> ⛓️ جويدة</span> <span class="text-[9px] md:text-[10px] bg-red-900/50 px-2 rounded mt-0.5">مسؤول: سهل</span></div>
                             </div>
                         </div>
                     </div>
@@ -196,25 +217,25 @@
 
                 <!-- الشرح -->
                 <div class="space-y-4">
-                    <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex gap-4">
-                        <i data-lucide="lock" class="text-purple-500 w-8 h-8 shrink-0"></i>
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 md:p-6 rounded-2xl flex gap-3 md:gap-4">
+                        <i data-lucide="lock" class="text-purple-500 w-6 h-6 md:w-8 md:h-8 shrink-0 mt-1"></i>
                         <div>
-                            <h4 class="text-white font-bold mb-2">حصانة الغرف الخاصة</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed">تتمتع الغرف الخاصة (الجلسات والأنمي وديزني) بحصانة تامة. يُمنع على الإدارة (هاشم وسامي) نقل أي شخص لغرفة أخرى بدون إذنه، أو الدخول المفاجئ للغرف الخاصة.</p>
+                            <h4 class="text-white font-bold mb-1 md:mb-2 text-sm md:text-base">حصانة الغرف الخاصة</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">تتمتع الغرف الخاصة (الجلسات والأنمي وديزني) بحصانة تامة. يُمنع على الإدارة (هاشم وسامي) نقل أي شخص لغرفة أخرى بدون إذنه، أو الدخول المفاجئ للغرف الخاصة.</p>
                         </div>
                     </div>
-                    <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-2xl flex gap-4">
-                        <i data-lucide="monitor-play" class="text-blue-500 w-8 h-8 shrink-0"></i>
+                    <div class="bg-slate-900/50 border border-slate-800 p-5 md:p-6 rounded-2xl flex gap-3 md:gap-4">
+                        <i data-lucide="monitor-play" class="text-blue-500 w-6 h-6 md:w-8 md:h-8 shrink-0 mt-1"></i>
                         <div>
-                            <h4 class="text-white font-bold mb-2">سينما الأصدقاء</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed">تم إزالة قانون الميوت الإجباري بناءً على طلب الإدارة، وأصبحت الغرفة مخصصة لمشاهدة الأفلام براحة تامة للجميع.</p>
+                            <h4 class="text-white font-bold mb-1 md:mb-2 text-sm md:text-base">سينما الأصدقاء</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">تم إزالة قانون الميوت الإجباري بناءً على طلب الإدارة، وأصبحت الغرفة مخصصة لمشاهدة الأفلام براحة تامة للجميع.</p>
                         </div>
                     </div>
-                    <div class="bg-red-950/20 border border-red-900/50 p-6 rounded-2xl flex gap-4 shadow-inner">
-                        <i data-lucide="alert-triangle" class="text-red-500 w-8 h-8 shrink-0"></i>
+                    <div class="bg-red-950/20 border border-red-900/50 p-5 md:p-6 rounded-2xl flex gap-3 md:gap-4 shadow-inner">
+                        <i data-lucide="alert-triangle" class="text-red-500 w-6 h-6 md:w-8 md:h-8 shrink-0 mt-1"></i>
                         <div>
-                            <h4 class="text-red-500 font-bold mb-2">سجن جويدة</h4>
-                            <p class="text-slate-400 text-sm leading-relaxed">تحت إدارة القاضي والمحامي سهل. المنفيون إليها لا يمكنهم الكلام إلا بداخلها وفي الغرف الخاصة فقط.</p>
+                            <h4 class="text-red-500 font-bold mb-1 md:mb-2 text-sm md:text-base">سجن جويدة</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">تحت إدارة القاضي والمحامي سهل. المنفيون إليها لا يمكنهم الكلام إلا بداخلها وفي الغرف الخاصة فقط.</p>
                         </div>
                     </div>
                 </div>
@@ -222,15 +243,15 @@
         </div>
 
         <!-- ============================== 3. صفحة الدستور ============================== -->
-        <div id="page-rules" class="page-content space-y-10 max-w-5xl mx-auto">
-            <div class="text-center space-y-4 border-b border-slate-800 pb-8">
-                <h2 class="text-5xl font-black text-yellow-500">دستور وقوانين سيرفر The Continental</h2>
-                <p class="text-slate-400 text-lg">الإدارة العليا: هاشم و سامي | إصدار عام 2026 - نسخة العدالة المطلقة</p>
+        <div id="page-rules" class="page-content space-y-8 md:space-y-10 max-w-5xl mx-auto">
+            <div class="text-center space-y-3 md:space-y-4 border-b border-slate-800 pb-6 md:pb-8">
+                <h2 class="text-3xl md:text-5xl font-black text-yellow-500 leading-tight">دستور وقوانين سيرفر The Continental</h2>
+                <p class="text-slate-400 text-sm md:text-lg">الإدارة العليا: هاشم و سامي | إصدار عام 2026 - نسخة العدالة المطلقة</p>
             </div>
 
-            <div class="space-y-10 text-right leading-loose">
+            <div class="space-y-8 md:space-y-10 text-right leading-loose">
                 <!-- مقدمة -->
-                <div class="bg-yellow-900/10 border border-yellow-600/30 p-6 rounded-xl">
+                <div class="bg-yellow-900/10 border border-yellow-600/30 p-4 md:p-6 rounded-xl text-sm md:text-base">
                     <p class="text-yellow-500">
                         "يا إخوان هاد السيرفر انعمل عشان نلعب نسهر وننبسط مع بعض. وعشان تظل قعدتنا حلوة وما حدا يزعل أو ياخذ بخاطره هاي القوانين واضحة للكل، والالتزام فيها إجباري على الجميع بدون استثناء. وجودك هون يعني إنك موافق على كل حرف مكتوب بالدستور."
                     </p>
@@ -238,57 +259,57 @@
 
                 <!-- 1. الخطوط الحمراء -->
                 <section>
-                    <h3 class="text-2xl font-bold text-red-500 mb-4 border-b border-red-900/30 pb-2 flex items-center gap-2"><i data-lucide="shield-alert"></i> 1. أولاً: الخطوط الحمراء (الممنوعات القطعية)</h3>
-                    <p class="text-slate-400 mb-4">هاي القوانين ما فيها "يما ارحميني"، والمخالفة فيها بتعرضك للطرد الفوري أو الحظر الشامل:</p>
-                    <ul class="space-y-4 text-slate-300 bg-slate-900 p-6 rounded-2xl border border-red-900/30">
-                        <li><strong class="text-white">الدين والسياسة:</strong> ممنوع منعاً باتاً التكفير، أو إهانة الدين الإسلامي بأي شكل. وممنوع نهائياً الإساءة للحكومة الأردنية أو التحدث بالسياسة بشكل مسيء.<br>
-                        <span class="text-slate-500 text-sm">مثال: لو واحد بلش يحلل ويحرم من راسه أو يسب بجهة سياسية، طرد فوري بدون "احم ولا دستور".</span></li>
+                    <h3 class="text-xl md:text-2xl font-bold text-red-500 mb-3 md:mb-4 border-b border-red-900/30 pb-2 flex items-center gap-2"><i data-lucide="shield-alert" class="w-5 h-5 md:w-6 md:h-6"></i> 1. أولاً: الخطوط الحمراء</h3>
+                    <p class="text-slate-400 mb-3 text-sm md:text-base">هاي القوانين ما فيها "يما ارحميني"، والمخالفة فيها بتعرضك للطرد الفوري أو الحظر الشامل:</p>
+                    <ul class="space-y-4 text-slate-300 bg-slate-900 p-4 md:p-6 rounded-2xl border border-red-900/30 text-sm md:text-base">
+                        <li><strong class="text-white block mb-1">الدين والسياسة:</strong> ممنوع منعاً باتاً التكفير، أو إهانة الدين الإسلامي بأي شكل. وممنوع نهائياً الإساءة للحكومة الأردنية أو التحدث بالسياسة بشكل مسيء.<br>
+                        <span class="text-slate-500 text-xs md:text-sm mt-1 block">مثال: لو واحد بلش يحلل ويحرم من راسه أو يسب بجهة سياسية، طرد فوري بدون "احم ولا دستور".</span></li>
                         
-                        <li><strong class="text-white">الأهل والشرف:</strong> مسموح السب والمزح الثقيل بين الشباب (تخويث)، خذوا راحتكم.. بس الأهل، والعرض، والشرف خط أحمر.<br>
-                        <span class="text-slate-500 text-sm">مثال: تمزح مع صاحبك وتقله "يا دبة" عادي بس تجيب سيرة أهله بقصد الإساءة؟ هون سهل القاضي رح يتدخل فورا.</span></li>
+                        <li class="pt-2 border-t border-slate-800"><strong class="text-white block mb-1">الأهل والشرف:</strong> مسموح السب والمزح الثقيل بين الشباب (تخويث)، خذوا راحتكم.. بس الأهل، والعرض، والشرف خط أحمر.<br>
+                        <span class="text-slate-500 text-xs md:text-sm mt-1 block">مثال: تمزح مع صاحبك وتقله "يا دبة" عادي بس تجيب سيرة أهله بقصد الإساءة؟ هون سهل القاضي رح يتدخل فورا.</span></li>
                         
-                        <li><strong class="text-white">الحقوق العامة والخاصة:</strong> ممنوع التعدي على خصوصية أي شخص بالسيرفر أو نشر صور أو معلومات بتضره أو بتكشف أسراره.</li>
+                        <li class="pt-2 border-t border-slate-800"><strong class="text-white">الحقوق العامة والخاصة:</strong> ممنوع التعدي على خصوصية أي شخص بالسيرفر أو نشر صور أو معلومات بتضره أو بتكشف أسراره.</li>
                     </ul>
                 </section>
 
                 <!-- 2. المراسيم الإدارية -->
                 <section>
-                    <h3 class="text-2xl font-bold text-blue-500 mb-4 border-b border-blue-900/30 pb-2 flex items-center gap-2"><i data-lucide="users"></i> 2. ثانياً: المراسيم الإدارية وتوزيع المناصب الجديدة</h3>
-                    <p class="text-slate-400 mb-4">بناءً على القرار الإداري الأخير، تم توزيع الصلاحيات كالتالي:</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-500 mb-3 md:mb-4 border-b border-blue-900/30 pb-2 flex items-center gap-2"><i data-lucide="users" class="w-5 h-5 md:w-6 md:h-6"></i> 2. ثانياً: المراسيم الإدارية </h3>
+                    <p class="text-slate-400 mb-3 text-sm md:text-base">بناءً على القرار الإداري الأخير، تم توزيع الصلاحيات كالتالي:</p>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-4 md:space-y-6">
                         <!-- بلال -->
-                        <div class="bg-slate-900 p-6 rounded-2xl border-r-4 border-blue-500">
-                            <h4 class="text-xl font-bold text-white mb-2">2.1 بلال - ملك الدستور</h4>
-                            <p class="text-slate-300 text-sm mb-2">تم تنصيب بلال ليكون المسؤول الأول والوحيد عن تشريع وتعديل قوانين السيرفر.</p>
-                            <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
-                                <li><strong>آلية العمل:</strong> أي حدا بده يقترح قانون جديد أو يعدل قانون قديم لازم يرفع طلب رسمي لبلال.</li>
-                                <li><strong>شروط التعديل:</strong> بلال ما بقدر يغير إشي من راسه لازم ياخذ موافقة 4 أعضاء على الأقل من السيرفر.</li>
-                                <li><strong>حق النقض (الفيتو):</strong> للإدارة العليا (هاشم) الحق برفض أي قانون بعارض السياسات الأولية للسيرفر.</li>
-                                <li><strong>العقوبة:</strong> إذا بلال غير قانون لحاله بدون ما يرجع للأعضاء، رح تنفرض عليه ضرائب وقوانين مادية ومعنوية ثقيلة جداً.</li>
+                        <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border-r-4 border-blue-500">
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2">2.1 بلال - ملك الدستور</h4>
+                            <p class="text-slate-300 text-xs md:text-sm mb-3">المسؤول الأول والوحيد عن تشريع وتعديل قوانين السيرفر.</p>
+                            <ul class="list-disc list-inside text-slate-400 text-xs md:text-sm space-y-2">
+                                <li><strong>آلية العمل:</strong> أي حدا بده يقترح قانون جديد يرفع طلب رسمي لبلال.</li>
+                                <li><strong>شروط التعديل:</strong> التعديل يحتاج موافقة 4 أعضاء على الأقل من السيرفر.</li>
+                                <li><strong>حق النقض:</strong> للإدارة العليا (هاشم) الحق برفض أي قانون بعارض السياسات الأولية.</li>
+                                <li><strong>العقوبة:</strong> تغيير الدستور بدون استشارة يفرض ضرائب مادية ومعنوية ثقيلة.</li>
                             </ul>
                         </div>
 
                         <!-- عبدالرحمن -->
-                        <div class="bg-slate-900 p-6 rounded-2xl border-r-4 border-blue-500">
-                            <h4 class="text-xl font-bold text-white mb-2">2.2 عبد الرحمن - ملك الأخبار (قسم رؤية)</h4>
-                            <p class="text-slate-300 text-sm mb-2">عبد الرحمن هو الناطق الرسمي باسم الأحداث والفعاليات في السيرفر:</p>
-                            <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
-                                <li><strong>نصاب النشر:</strong> مسموح إله ينشر 5 أخبار يومياً كحد أقصى (تم التعديل من 3 إلى 5).</li>
+                        <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border-r-4 border-blue-500">
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2">2.2 عبد الرحمن - ملك الأخبار (رؤية)</h4>
+                            <p class="text-slate-300 text-xs md:text-sm mb-3">الناطق الرسمي باسم الأحداث والفعاليات في السيرفر:</p>
+                            <ul class="list-disc list-inside text-slate-400 text-xs md:text-sm space-y-2">
+                                <li><strong>نصاب النشر:</strong> مسموح إله ينشر 5 أخبار يومياً كحد أقصى.</li>
                                 <li><strong>حجم الخبر:</strong> الرسالة الواحدة لازم ما تتعدى 80 كلمة.</li>
                                 <li><strong>المصداقية:</strong> الخبر لازم يكون حقيقي وفج وبدون "بهارات" كاذبة.</li>
-                                <li><strong>العقوبة:</strong> نشر خبر كاذب أو تافه بيؤدي لفرض ضرائب مادية ومعنوية على عبد الرحمن وعلى قناته الإخبارية.</li>
+                                <li><strong>العقوبة:</strong> الأخبار الكاذبة تفرض ضرائب مادية ومعنوية عليه وعلى قناته.</li>
                             </ul>
                         </div>
 
                         <!-- سهل -->
-                        <div class="bg-slate-900 p-6 rounded-2xl border-r-4 border-blue-500">
-                            <h4 class="text-xl font-bold text-white mb-2">2.3 سهل - القاضي والمحامي (منطقة العقوبات)</h4>
-                            <p class="text-slate-300 text-sm mb-2">سهل هو الميزان العادل لـ The Continental و قراره نافذ:</p>
-                            <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
-                                <li><strong>الصلاحيات:</strong> سهل بقرر "نوع العقوبة" و "مدتها" نيابة عن هاشم وسامي.</li>
-                                <li><strong>الاعتراض:</strong> مسموح لهاشم أو سامي أو أي شاهد عيان يعترض على "مدة العقوبة" فقط.</li>
-                                <li><strong>الحصانة القضائية:</strong> ممنوع منعاً باتاً الاعتراض على "طريقة" سهل بالقضاء أو أسلوبه بالمحاماة. سهل هو المحامي والقاضي في نفس الوقت وأسلوبه غير قابل للنقاش.</li>
+                        <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border-r-4 border-blue-500">
+                            <h4 class="text-lg md:text-xl font-bold text-white mb-2">2.3 سهل - القاضي والمحامي</h4>
+                            <p class="text-slate-300 text-xs md:text-sm mb-3">الميزان العادل لـ The Continental و قراره نافذ:</p>
+                            <ul class="list-disc list-inside text-slate-400 text-xs md:text-sm space-y-2">
+                                <li><strong>الصلاحيات:</strong> بقرر "نوع العقوبة" و "مدتها" نيابة عن هاشم وسامي.</li>
+                                <li><strong>الاعتراض:</strong> مسموح للإدارة أو شهود العيان الاعتراض على "مدة العقوبة" فقط.</li>
+                                <li><strong>الحصانة القضائية:</strong> ممنوع الاعتراض على أسلوبه بالمحاماة، هو المحامي والقاضي.</li>
                             </ul>
                         </div>
                     </div>
@@ -296,28 +317,27 @@
 
                 <!-- 3. قوانين ملك الدستور -->
                 <section>
-                    <h3 class="text-2xl font-bold text-yellow-600 mb-4 border-b border-yellow-900/30 pb-2 flex items-center gap-2"><i data-lucide="file-text"></i> 3. ثالثاً: قوانين ملك الدستور (القوانين الجديدة)</h3>
-                    <p class="text-slate-400 mb-4">هاي القوانين اللي قررها بلال بصفته ملك الدستور:</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-yellow-600 mb-3 md:mb-4 border-b border-yellow-900/30 pb-2 flex items-center gap-2"><i data-lucide="file-text" class="w-5 h-5 md:w-6 md:h-6"></i> 3. ثالثاً: قوانين ملك الدستور</h3>
                     
-                    <div class="bg-slate-900 p-6 rounded-2xl border border-yellow-900/30 space-y-6">
+                    <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border border-yellow-900/30 space-y-4 md:space-y-6">
                         <div>
                             <h4 class="font-bold text-yellow-500 mb-1">🍔 قانون الشاورما والمايك:</h4>
-                            <p class="text-slate-300 text-sm">ممنوع أكل الشاورما أو أي وجبة دسمة وفتح المايكروفون بنفس الوقت.</p>
-                            <p class="text-slate-400 text-xs mt-1">- <strong>العقوبة:</strong> المخالف رح ينجبر يفتح مايك والكل يسمع صوت "مضغه" للأكل لمدة 5 دقائق (تعذيب جماعي للكل)، ويُعاقب بالمنع من الكلام لمدة 15 دقيقة إذا كان الأشخاص منزعجين.</p>
+                            <p class="text-slate-300 text-xs md:text-sm">ممنوع أكل الشاورما أو وجبة دسمة وفتح المايكروفون بنفس الوقت.</p>
+                            <p class="text-slate-400 text-xs mt-1">- <strong>العقوبة:</strong> ينجبر المخالف يفتح مايك والكل يسمع صوت "مضغه" لمدة 5 دقائق (تعذيب جماعي)، ويُعاقب بالمنع من الكلام لمدة 15 دقيقة إذا انزعج الأعضاء.</p>
                         </div>
-                        
+                        <hr class="border-slate-800">
                         <div>
                             <h4 class="font-bold text-yellow-500 mb-1">🤖 قانون بوت السيرفر:</h4>
-                            <p class="text-slate-300 text-sm">إذا العضو خسر 3 جيمات ورا بعض في أي لعبة.</p>
-                            <p class="text-slate-400 text-xs mt-1">- <strong>العقوبة:</strong> الإدارة بتغير اسمه لـ "بوت السيرفر" لمدة ساعة كاملة كنوع من المواساة النفسية القاسية.</p>
+                            <p class="text-slate-300 text-xs md:text-sm">إذا العضو خسر 3 جيمات ورا بعض في أي لعبة.</p>
+                            <p class="text-slate-400 text-xs mt-1">- <strong>العقوبة:</strong> تغيير اسمه لـ "بوت السيرفر" لمدة ساعة كاملة كنوع من المواساة القاسية.</p>
                         </div>
-
+                        <hr class="border-slate-800">
                         <div>
-                            <h4 class="font-bold text-yellow-500 mb-1">💰 مكافحة الفساد والرشوة:</h4>
-                            <ul class="text-slate-300 text-sm space-y-2 mt-2">
-                                <li>- <strong>رشاوي الأكل:</strong> الرشوة مقبولة بس إذا كانت "سدر منسف" أو "طلب شاورما" لبيت ملك الدستور (بسرية تامة). أما حبة علكة أو نص ساندويشة؟ بتضاعف العقوبة لأنك بتستصغر بقدر الإدارة.</li>
-                                <li>- <strong>رشاوي الجيمينج:</strong> ممنوع تعطي "سكنات" مقابل رتبة VIP . وإذا حكيت "بطلعك رانك مقابل تشيل التايم آوت" وخسرنا الجيم؟ تبنيد فوري.</li>
-                                <li>- <strong>الواسطة:</strong> جملة "بتعرف أنا ابن مين" ما بتنفع هون. الكل سواسية قدام الدستور، إلا إذا عندك واسطة عن جد، وقتها بنشرب قهوة وبنحلها.</li>
+                            <h4 class="font-bold text-yellow-500 mb-2">💰 مكافحة الفساد والرشوة:</h4>
+                            <ul class="text-slate-300 text-xs md:text-sm space-y-2">
+                                <li>- <strong>رشاوي الأكل:</strong> مقبولة بس إذا كانت "سدر منسف" أو "شاورما" لبيت ملك الدستور (سراً). العلكة أو نص ساندويشة تضاعف العقوبة لاستصغار الإدارة.</li>
+                                <li>- <strong>رشاوي الجيمينج:</strong> ممنوع "سكنات" مقابل VIP. وعرض "بطلعك رانك مقابل تشيل التايم آوت" يؤدي لتبنيد فوري في حال الخسارة.</li>
+                                <li>- <strong>الواسطة:</strong> جملة "بتعرف أنا ابن مين" لا تنفع. الكل سواسية قدام الدستور، إلا بوجود واسطة حقيقية (بنشرب قهوة وبنحلها).</li>
                             </ul>
                         </div>
                     </div>
@@ -325,9 +345,8 @@
 
                 <!-- 4. نظام التوقيف -->
                 <section>
-                    <h3 class="text-2xl font-bold text-orange-500 mb-4 border-b border-orange-900/30 pb-2 flex items-center gap-2"><i data-lucide="clock"></i> 4. رابعاً: نظام التوقيف والعقوبات الزمانية</h3>
-                    <p class="text-slate-400 mb-4">المخالفات العادية بتتعالج بنظام الوقت (Time-out):</p>
-                    <ul class="space-y-2 text-slate-300 bg-slate-900 p-6 rounded-2xl border border-orange-900/30">
+                    <h3 class="text-xl md:text-2xl font-bold text-orange-500 mb-3 md:mb-4 border-b border-orange-900/30 pb-2 flex items-center gap-2"><i data-lucide="clock" class="w-5 h-5 md:w-6 md:h-6"></i> 4. رابعاً: التوقيف الزمني</h3>
+                    <ul class="space-y-2 text-slate-300 bg-slate-900 p-4 md:p-6 rounded-2xl border border-orange-900/30 text-sm md:text-base">
                         <li>- <strong>المخالفة الأولى:</strong> دقيقة واحدة.</li>
                         <li>- <strong>مخالفتين ورا بعض:</strong> 5 دقائق.</li>
                         <li>- <strong>3 مخالفات:</strong> 10 دقائق يراجع فيها حساباته بالزنزانة.</li>
@@ -336,37 +355,37 @@
 
                 <!-- 5. نظام الرتب -->
                 <section>
-                    <h3 class="text-2xl font-bold text-purple-500 mb-4 border-b border-purple-900/30 pb-2 flex items-center gap-2"><i data-lucide="award"></i> 5. خامساً: نظام الرتب والحركة</h3>
-                    <ul class="space-y-4 text-slate-300 bg-slate-900 p-6 rounded-2xl border border-purple-900/30">
-                        <li>- <strong>ورد صباغ (VIP):</strong> إله الحق يطلع ويدخل من السيرفر متى ما بده وبدون ما حدا يحاسبه.</li>
-                        <li>- <strong>باقي الأعضاء:</strong> مسموح تطلع وتدخل 3 مرات بس. الرابعة فيها عقوبات صارمة وسحب صلاحيات كتابة.</li>
-                        <li>- <strong>سلطة سامي:</strong> سامي إله الحق يسحب صلاحية الكتابة أو الميوت لأي شخص بخرب الجو.</li>
+                    <h3 class="text-xl md:text-2xl font-bold text-purple-500 mb-3 md:mb-4 border-b border-purple-900/30 pb-2 flex items-center gap-2"><i data-lucide="award" class="w-5 h-5 md:w-6 md:h-6"></i> 5. خامساً: الرتب والحركة</h3>
+                    <ul class="space-y-3 md:space-y-4 text-slate-300 bg-slate-900 p-4 md:p-6 rounded-2xl border border-purple-900/30 text-sm md:text-base">
+                        <li>- <strong>ورد صباغ (VIP):</strong> إله الحق يطلع ويدخل متى ما بده وبدون ما حدا يحاسبه.</li>
+                        <li>- <strong>باقي الأعضاء:</strong> مسموح الدخول 3 مرات بس. الرابعة سحب صلاحيات كتابة.</li>
+                        <li>- <strong>سلطة سامي:</strong> إله الحق يسحب الكتابة أو يعمل ميوت لأي شخص بخرب الجو.</li>
                     </ul>
                 </section>
 
                 <!-- 6. الإلحاقات الإدارية -->
                 <section>
-                    <h3 class="text-2xl font-bold text-emerald-500 mb-4 border-b border-emerald-900/30 pb-2 flex items-center gap-2"><i data-lucide="file-plus"></i> 6. سادساً: الإلحاقات الإدارية وأنواع العقوبات الأربعة</h3>
-                    <div class="space-y-6">
-                        <div class="bg-slate-900 p-6 rounded-2xl border border-emerald-900/30">
-                            <h4 class="font-bold text-emerald-400 mb-2">🛡️ قانون منع النقل التعسفي للإدارة:</h4>
-                            <p class="text-slate-300 text-sm">يُمنع منعاً باتاً للمسؤولين (هاشم وسامي) أو أي شخص طلب نقل شخص معين إلى غرفة أخرى بدون إذنه، أو الدخول المفاجئ على الغرف الخاصة المشغولة. وإذا تم مخالفة هذه الأمور وتم التصويت على العقاب، فسوف يتم تنفيذ العقوبة التي يختارها سهل فوراً.</p>
+                    <h3 class="text-xl md:text-2xl font-bold text-emerald-500 mb-3 md:mb-4 border-b border-emerald-900/30 pb-2 flex items-center gap-2"><i data-lucide="file-plus" class="w-5 h-5 md:w-6 md:h-6"></i> 6. سادساً: أنواع العقوبات</h3>
+                    <div class="space-y-4 md:space-y-6">
+                        <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border border-emerald-900/30">
+                            <h4 class="font-bold text-emerald-400 mb-2 text-sm md:text-base">🛡️ قانون منع النقل التعسفي للإدارة:</h4>
+                            <p class="text-slate-300 text-xs md:text-sm">يُمنع منعاً باتاً للمسؤولين (هاشم وسامي) أو أي شخص طلب نقل شخص معين إلى غرفة أخرى بدون إذنه، أو الدخول المفاجئ على الغرف الخاصة المشغولة. وإذا تم مخالفة هذه الأمور وتم التصويت على العقاب، فسوف يتم تنفيذ العقوبة التي يختارها سهل فوراً.</p>
                         </div>
                         
-                        <div class="bg-slate-900 p-6 rounded-2xl border border-emerald-900/30">
-                            <h4 class="font-bold text-emerald-400 mb-4">⚠️ أنواع العقوبات الأساسية:</h4>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div class="bg-slate-800 p-3 rounded"><strong class="text-yellow-500">1. خروج مؤقت:</strong> سحب الصلاحيات مؤقتاً كالتايم آوت.</div>
+                        <div class="bg-slate-900 p-4 md:p-6 rounded-2xl border border-emerald-900/30">
+                            <h4 class="font-bold text-emerald-400 mb-3 md:mb-4 text-sm md:text-base">⚠️ أنواع العقوبات الأساسية:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
+                                <div class="bg-slate-800 p-3 rounded"><strong class="text-yellow-500">1. خروج مؤقت:</strong> سحب الصلاحيات مؤقتاً.</div>
                                 <div class="bg-slate-800 p-3 rounded"><strong class="text-orange-500">2. منع من الكتابة:</strong> لا يستطيع الكتابة نهائياً.</div>
                                 <div class="bg-slate-800 p-3 rounded"><strong class="text-red-500">3. منع من الصوت:</strong> يُمنع من التحدث بالمايك.</div>
-                                <div class="bg-slate-800 p-3 rounded border border-red-900/50"><strong class="text-red-600">4. الحظر الشامل (جويدة):</strong> النفي الشامل. يُسمح فقط الكلام بجويدة وداخل الغرف الخاصة.</div>
+                                <div class="bg-slate-800 p-3 rounded border border-red-900/50"><strong class="text-red-600">4. الحظر الشامل (جويدة):</strong> يُسمح الكلام بجويدة والغرف الخاصة فقط.</div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <div class="bg-blue-900/20 border border-blue-600/30 p-6 rounded-xl text-center">
-                    <p class="text-blue-400 font-bold">
+                <div class="bg-blue-900/20 border border-blue-600/30 p-4 md:p-6 rounded-xl text-center">
+                    <p class="text-blue-400 font-bold text-sm md:text-base">
                         "العبوا، انبسطوا، وكونوا وحوش! تذكروا إنو The Continental عنده قوانين صارمة بتحميه وبتحمي قعدتنا. أي مخالفة للدستور بتعرضك للمحاكمة قدام سهل."
                     </p>
                 </div>
@@ -374,59 +393,59 @@
         </div>
 
         <!-- ============================== 4. صفحة الإدارة ============================== -->
-        <div id="page-admins" class="page-content space-y-10">
-            <div class="text-center space-y-2 border-b border-slate-800 pb-8">
-                <h2 class="text-4xl font-black text-yellow-500">مجلس القيادة</h2>
-                <p class="text-slate-400">طاقم الإدارة العليا وتوزيع المناصب.</p>
+        <div id="page-admins" class="page-content space-y-8 md:space-y-10">
+            <div class="text-center space-y-2 border-b border-slate-800 pb-6 md:pb-8">
+                <h2 class="text-3xl md:text-4xl font-black text-yellow-500">مجلس القيادة</h2>
+                <p class="text-slate-400 text-sm md:text-base">طاقم الإدارة العليا وتوزيع المناصب.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 <!-- هاشم وسامي -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="crown" class="w-10 h-10 text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">هاشم & سامي</h3>
-                    <div class="text-yellow-600 text-xs font-bold mb-4">الإدارة العليا (SUPREME)</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">أصحاب الكلمة الأخيرة وحق الفيتو لرفض أي قانون يخالف السياسات، يُمنع عليهم اختراق الغرف الخاصة والنقل التعسفي.</p>
+                <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="crown" class="w-8 h-8 md:w-10 md:h-10 text-yellow-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">هاشم & سامي</h3>
+                    <div class="text-yellow-600 text-[10px] md:text-xs font-bold mb-3 md:mb-4">الإدارة العليا (SUPREME)</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">أصحاب الكلمة الأخيرة وحق الفيتو، يُمنع عليهم اختراق الغرف الخاصة والنقل التعسفي.</p>
                 </div>
 
                 <!-- بلال -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="file-text" class="w-10 h-10 text-amber-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">بلال</h3>
-                    <div class="text-amber-500 text-xs font-bold mb-4">ملك الدستور</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">المسؤول الأول والوحيد عن تشريع وتعديل القوانين. يحتاج موافقة 4 أعضاء لتعديل أي بند. تجاوزه للصلاحيات يعرضه لضرائب مادية ومعنوية ثقيلة جداً.</p>
+                <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="file-text" class="w-8 h-8 md:w-10 md:h-10 text-amber-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">بلال</h3>
+                    <div class="text-amber-500 text-[10px] md:text-xs font-bold mb-3 md:mb-4">ملك الدستور</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">المسؤول الأول عن تشريع القوانين. يحتاج موافقة 4 أعضاء لأي تعديل، وتجاوزه يعرضه لضرائب.</p>
                 </div>
 
                 <!-- سهل -->
-                <div class="bg-slate-900 border border-red-900/30 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="gavel" class="w-10 h-10 text-red-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">سهل</h3>
-                    <div class="text-red-500 text-xs font-bold mb-4">القاضي والمحامي</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">الميزان العادل لـ The Continental. الحاكم في منطقة جويدة. يقرر مدة ونوع العقوبة، أسلوبه في المحاماة قطعي ولا يمكن لأحد النقاش فيه أبداً.</p>
+                <div class="bg-slate-900 border border-red-900/30 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="gavel" class="w-8 h-8 md:w-10 md:h-10 text-red-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">سهل</h3>
+                    <div class="text-red-500 text-[10px] md:text-xs font-bold mb-3 md:mb-4">القاضي والمحامي</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">الحاكم في منطقة جويدة. يقرر العقوبات، وأسلوبه في المحاماة قطعي ولا يمكن نقاشه.</p>
                 </div>
 
                 <!-- ورد -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="user-check" class="w-10 h-10 text-purple-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">ورد صباغ</h3>
-                    <div class="text-purple-500 text-xs font-bold mb-4">نائب القاضي (VIP)</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">يمتلك حصانة الدخول والخروج متى ما شاء دون التعرض للمحاسبة. وهو النائب الرسمي للقاضي والمحامي سهل.</p>
+                <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="user-check" class="w-8 h-8 md:w-10 md:h-10 text-purple-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">ورد صباغ</h3>
+                    <div class="text-purple-500 text-[10px] md:text-xs font-bold mb-3 md:mb-4">نائب القاضي (VIP)</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">يمتلك حصانة الدخول والخروج متى ما شاء. النائب الرسمي للقاضي سهل.</p>
                 </div>
 
                 <!-- عبدالرحمن -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="newspaper" class="w-10 h-10 text-blue-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">عبدالرحمن</h3>
-                    <div class="text-blue-500 text-xs font-bold mb-4">ملك الأخبار</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">مسؤول قناة رؤية. مسموح له بنشر 5 أخبار يومياً، والخبر لا يتعدى 80 كلمة. الخبر حقيقي وفج وبدون "بهارات"، وأي كذب يعرضه لضرائب قاسية.</p>
+                <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="newspaper" class="w-8 h-8 md:w-10 md:h-10 text-blue-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">عبدالرحمن</h3>
+                    <div class="text-blue-500 text-[10px] md:text-xs font-bold mb-3 md:mb-4">ملك الأخبار</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">مسموح له بـ 5 أخبار يومياً، كحد أقصى 80 كلمة للخبر. الأخبار الكاذبة تعرضه للضرائب.</p>
                 </div>
 
                 <!-- عمار -->
-                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl hover:-translate-y-2 transition-all">
-                    <i data-lucide="calendar" class="w-10 h-10 text-green-500 mb-4"></i>
-                    <h3 class="text-2xl font-black text-white mb-1">عمار</h3>
-                    <div class="text-green-500 text-xs font-bold mb-4">إدارة النشاطات</div>
-                    <p class="text-slate-400 text-sm leading-relaxed">المنظم الأول للفعاليات، البطولات والتنسيق بين أعضاء السيرفر.</p>
+                <div class="bg-slate-900 border border-slate-800 p-6 md:p-8 rounded-3xl md:hover:-translate-y-2 transition-all">
+                    <i data-lucide="calendar" class="w-8 h-8 md:w-10 md:h-10 text-green-500 mb-3 md:mb-4"></i>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-1">عمار</h3>
+                    <div class="text-green-500 text-[10px] md:text-xs font-bold mb-3 md:mb-4">إدارة النشاطات</div>
+                    <p class="text-slate-400 text-xs md:text-sm leading-relaxed">المنظم الأول للفعاليات، البطولات والتنسيق بين أعضاء السيرفر.</p>
                 </div>
             </div>
         </div>
@@ -443,14 +462,28 @@
             
             document.getElementById('page-' + pageId).classList.add('active');
 
-            document.querySelectorAll('.nav-btn').forEach(btn => {
+            // إعادة الأزرار (كمبيوتر وموبايل) للوضع العادي
+            document.querySelectorAll('.nav-btn-desk').forEach(btn => {
                 btn.classList.remove('bg-yellow-600', 'text-slate-950', 'shadow-[0_0_15px_rgba(202,138,4,0.3)]');
                 btn.classList.add('text-slate-400');
             });
+            document.querySelectorAll('.nav-btn-mob').forEach(btn => {
+                btn.classList.remove('text-yellow-500');
+                btn.classList.add('text-slate-400');
+            });
 
-            const activeBtn = document.getElementById('btn-' + pageId);
-            activeBtn.classList.remove('text-slate-400');
-            activeBtn.classList.add('bg-yellow-600', 'text-slate-950', 'shadow-[0_0_15px_rgba(202,138,4,0.3)]');
+            // تلوين الأزرار النشطة
+            const activeDeskBtn = document.querySelector('.nav-btn-desk.nav-target-' + pageId);
+            if(activeDeskBtn){
+                activeDeskBtn.classList.remove('text-slate-400');
+                activeDeskBtn.classList.add('bg-yellow-600', 'text-slate-950', 'shadow-[0_0_15px_rgba(202,138,4,0.3)]');
+            }
+
+            const activeMobBtn = document.querySelector('.nav-btn-mob.nav-target-' + pageId);
+            if(activeMobBtn){
+                activeMobBtn.classList.remove('text-slate-400');
+                activeMobBtn.classList.add('text-yellow-500');
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -459,40 +492,31 @@
         // 🛡️ نظام حماية الموقع (منع أدوات المطور) 🛡️
         // ==========================================
         
-        // 1. منع الزر الأيمن (Context Menu)
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
 
-        // 2. منع اختصارات الكيبورد لأدوات المطور
         document.addEventListener('keydown', function(e) {
-            // منع F12
             if (e.key === 'F12' || e.keyCode === 123) {
                 e.preventDefault();
             }
-            // منع Ctrl+Shift+I
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
                 e.preventDefault();
             }
-            // منع Ctrl+Shift+J (Console)
             if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
                 e.preventDefault();
             }
-            // منع Ctrl+U (View Source)
             if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
                 e.preventDefault();
             }
-            // منع Ctrl+S (حفظ الصفحة)
             if (e.ctrlKey && (e.key === 'S' || e.key === 's' || e.keyCode === 83)) {
                 e.preventDefault();
             }
-            // منع Ctrl+P (طباعة الصفحة)
             if (e.ctrlKey && (e.key === 'P' || e.key === 'p' || e.keyCode === 80)) {
                 e.preventDefault();
             }
         });
 
-        // 3. تجميد المتصفح إذا تم فتح أدوات المطور من إعدادات المتصفح
         setInterval(function() {
             debugger;
         }, 100);
